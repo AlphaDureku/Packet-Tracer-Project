@@ -1,0 +1,47 @@
+Router1
+gig0/0 ip address 192.168.10.161 255.255.255.252
+gig0/1 ip address 192.168.10.165 255.255.255.252
+!
+Router2
+gig0/0 ip address 192.168.10.169 255.255.255.252
+gig0/1 ip address 192.168.10.173 255.255.255.252
+!
+Then I moved to the access layer to set VLAN on switches
+int range fa0/3-22 - Sample for Bohol HR dept with 20 users 
+switchport mode access
+switchport access vlan 10
+int range gig0/1-2 
+switchport mode access
+switchport access vlan 10
+Then trunk the port connected to the Multi Switch
+switchport mode trunk
+do wr
+!
+Next is MultiSwitch
+int vlan 10
+ip add 192.168.10.1 255.255.255.0
+int vlan 20
+ip add 192.168.20.1 255.255.255.0
+int vlan 30
+ip add 192.168.30.1 255.255.255.0
+int range fa0/2-4
+switchport mode dynamic desirable
+ip routing
+do wr
+!
+create virtual IP
+int vlan 10
+standby 10 priority 110
+standby 10 preempt
+standby ip 172.16.1.254
+!
+remote DHCP
+@multilayer switch
+int vlan 10
+ip helper-address <server IP add>
+!
+Connecting 2 routers
+router rip
+version v2
+network IP to router end with 0
+network IP to switch end with 0
