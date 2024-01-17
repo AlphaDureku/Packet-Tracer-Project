@@ -40,6 +40,45 @@ remote DHCP
 int vlan 10
 ip helper-address <server IP add>
 !
+MultiSwitch to Router
+ip routing
+router rip
+version 2
+network <both ends>
+no auto-summary
+int <port to router>
+no switchport
+ip add
+!
+Router to MultiSwitch
+router rip
+version 2
+network <both ends>
+no auto-summary
+ip add
+!
+ACL
+access-list 101 deny ip 172.16.0.0 | 0.0.3.255 | 172.16.4.0 | 0.0.3.255
+access-list 101 deny ip 172.16.0.0 | 0.0.3.255 | 10.0.0.16  | 0.0.0.15
+access-list 101 deny ip 10.0.0.0   | 0.0.0.15  | 172.16.4.0 | 0.0.3.255
+access-list 101 deny ip 10.0.0.0   | 0.0.0.15  | 10.0.0.16  | 0.0.0.15
+access-list 101 permit ip 172.16.0.0 | 0.0.3.255 | any
+access-list 101 permit ip 10.0.0.0   | 0.0.0.15 | any
+access-list deny any any 
+ip nat inside source list 101 int se0/3/0 overload
+int r gig0/1-2
+ip nat inside
+int se 0/2/0 
+ip nat outside
+
+
+
+
+
+
+
+
+
 Connecting 2 routers
 router rip
 version v2
