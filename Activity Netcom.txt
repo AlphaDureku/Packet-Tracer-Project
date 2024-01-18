@@ -58,29 +58,42 @@ no auto-summary
 ip add
 !
 ACL
-access-list 101 deny ip 172.16.0.0 | 0.0.3.255 | 172.16.4.0 | 0.0.3.255
-access-list 101 deny ip 172.16.0.0 | 0.0.3.255 | 10.0.0.16  | 0.0.0.15
-access-list 101 deny ip 10.0.0.0   | 0.0.0.15  | 172.16.4.0 | 0.0.3.255
-access-list 101 deny ip 10.0.0.0   | 0.0.0.15  | 10.0.0.16  | 0.0.0.15
-access-list 101 permit ip 172.16.0.0 | 0.0.3.255 | any
-access-list 101 permit ip 10.0.0.0   | 0.0.0.15 | any
-access-list deny any any 
+Manila
+access-list 101 deny ip 172.16.0.0 0.0.3.255 172.16.4.0  0.0.3.255
+access-list 101 deny ip 172.16.0.0 0.0.3.255 10.0.0.16  0.0.0.15
+access-list 101 deny ip 10.0.0.0 0.0.0.15  172.16.4.0  0.0.3.255
+access-list 101 deny ip 10.0.0.0 0.0.0.15  10.0.0.16 0.0.0.15
+access-list 101 permit ip 172.16.0.0 0.0.3.255  any
+access-list 101 permit ip 10.0.0.0 0.0.0.15 any
+access-list 101 deny ip any any 
 ip nat inside source list 101 int se0/3/0 overload
-int r gig0/1-2
+int r gig0/0-1
 ip nat inside
-int se 0/2/0 
+int se 0/3/0 
 ip nat outside
-
-
-
-
-
-
-
-
-
+!
+Makati
+access-list 101 deny ip 172.16.4.0 0.0.3.255 172.16.0.0 0.0.3.255
+access-list 101 deny ip 172.16.4.0 0.0.3.255 10.0.0.0  0.0.0.15
+access-list 101 deny ip 10.0.0.16  0.0.0.15 172.16.0.0 0.0.3.255
+access-list 101 deny ip 10.0.0.16 0.0.0.15 10.0.0.0  0.0.0.15
+access-list 101 permit ip 172.16.4.0 0.0.3.255 any
+access-list 101 permit ip 10.0.0.16  0.0.0.15 any
+access-list 101 deny ip any any 
+ip nat inside source list 101 int se0/3/0 overload
+int r gig0/0-1
+ip nat inside
+int se 0/3/0 
+ip nat outside
+!
 Connecting 2 routers
 router rip
 version v2
 network IP to router end with 0
 network IP to switch end with 0
+!
+Helper Commands
+sh run | begin rip
+sh access-list
+sh ip nat translation
+show ip nat statistics
