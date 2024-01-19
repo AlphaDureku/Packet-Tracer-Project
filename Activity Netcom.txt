@@ -129,5 +129,6 @@ enable secret 1234
 !
 negate VPN - do it on all serial ports within site
 do show run | section interface Serial
+int se0/0/0
 no crypto map SITEMAP
 
