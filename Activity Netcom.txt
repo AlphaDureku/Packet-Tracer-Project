@@ -97,3 +97,21 @@ sh run | begin rip
 sh access-list
 sh ip nat translation
 show ip nat statistics
+!
+secure global config
+enable secret <password>
+!
+secure ssh
+ip domain-name ms1.manila.com
+username admin password 12345
+crypto key generate rsa
+1024
+ssh time-out 1200
+ssh authentication-retries 3
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+login
+logging synchronous
+
