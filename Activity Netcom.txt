@@ -31,8 +31,8 @@ do wr
 !
 create virtual IP
 int vlan 10
-standby 10 priority 110
-standby 10 preempt
+standby priority 110
+standby preempt
 standby ip 172.16.1.254
 !
 remote DHCP
@@ -116,12 +116,16 @@ login
 logging synchronous
 !
 !secure telnet
-line vty 0 15
-password 1234
-login 
-ex
-enable secret 1234
 username admin password admin
+line vty 0 15
+ login local
+ logging synchronous
+ transport input telnet
+ex
+!
+enable global config - 
+enable secret 1234
+
 !
 negate VPN - do it on all serial ports within site
 do show run | section interface Serial
