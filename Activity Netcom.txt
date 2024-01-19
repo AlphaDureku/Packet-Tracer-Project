@@ -101,7 +101,7 @@ show ip nat statistics
 secure global config
 enable secret <password>
 !
-secure ssh
+secure ssh - make sure to add on DNS
 ip domain-name ms1.manila.com
 username admin password 12345
 crypto key generate rsa
@@ -114,4 +114,8 @@ login local
 transport input ssh
 login
 logging synchronous
+!
+negate VPN - do it on all serial ports within site
+do show run | section interface Serial
+no crypto map SITEMAP
 
