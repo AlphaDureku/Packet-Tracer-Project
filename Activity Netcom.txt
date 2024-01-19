@@ -106,7 +106,7 @@ ip domain-name ms1.manila.com
 username admin password 12345
 crypto key generate rsa
 1024
-ssh time-out 1200
+ip ssh time-out 1200
 ssh authentication-retries 3
 ip ssh version 2
 line vty 0 15
@@ -114,6 +114,14 @@ login local
 transport input ssh
 login
 logging synchronous
+!
+!secure telnet
+line vty 0 15
+password 1234
+login 
+ex
+enable secret 1234
+username admin password admin
 !
 negate VPN - do it on all serial ports within site
 do show run | section interface Serial
