@@ -57,6 +57,11 @@ network <both ends>
 no auto-summary
 ip add
 !
+router ospf 1
+network 172.16.0.0 0.0.255.255 area 0
+network 10.0.0.0 0.0.0.15 area 0
+
+!
 ACL
 Manila
 access-list 101 deny ip 172.16.0.0 0.0.3.255 172.16.4.0  0.0.3.255
