@@ -91,6 +91,7 @@ int r gig0/0-1
 ip nat inside
 int se 0/3/0 
 ip nat outside
+show ip nat translations
 !
 Connecting 2 routers
 router rip
