@@ -138,4 +138,13 @@ negate VPN - do it on all serial ports within site
 do show run | section interface Serial
 int se0/0/0
 no crypto map SITEMAP
+!
+DHCP
+We implemented DHCP in order for our devices have a dynamically assigned IP addresses automatically, of course it also includes the dns server and default gateway. 
+
+DNS - was also implemented in the network in order to translate human readable domain names into IP addresses that computers use to identify in the network.
+For example we plan to use it sa domain name ng ssh namin, so by default we can access the ssh using its ip address
+however, there is a better way to do it, just by assigning its own domain name and registering it in the dns server with its human readable domain name into its repective ip address
+
+Web servers was then deployed into the network - we used it for the deploying web pages, so basically web hosting sya, the web server hosts websites for the company to use in case na mayroon silang company website.
 
